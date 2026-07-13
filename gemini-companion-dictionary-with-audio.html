@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus Companion: 100-Word Tanglish-English Dictionary</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-canvas: #fbfbf9;
+            --bg-card: #ffffff;
+            --primary: #0f172a;
+            --secondary: #475569;
+            --accent: #b45309;
+            --accent-light: #fef3c7;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --success: #15803d;
+            --success-light: #f0fdf4;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-canvas); color: var(--primary); line-height: 1.6; }
+        .app-container { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
+        header { border-bottom: 2px solid var(--border); padding-bottom: 30px; margin-bottom: 40px; }
+        header h1 { font-family: 'Lora', serif; font-size: 38px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        header p { font-size: 16px; color: var(--secondary); font-style: italic; }
+
+        .quick-ref-section { background-color: var(--accent-light); border-left: 5px solid var(--accent); border-radius: 8px; padding: 25px; margin-bottom: 45px; box-shadow: var(--shadow-sm); }
+        .quick-ref-section h2 { font-family: 'Lora', serif; font-size: 22px; color: var(--accent); margin-bottom: 15px; }
+        .quick-ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .quick-ref-card { background-color: var(--bg-card); border-radius: 6px; padding: 18px; border: 1px solid rgba(180, 83, 9, 0.15); }
+        .quick-ref-card h3 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .quick-ref-card h3 i { color: var(--accent); }
+        .quick-ref-card p { font-size: 13.5px; color: var(--secondary); }
+
+        .controls-container { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 15px; }
+        .search-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        .search-box-wrapper { position: relative; flex: 1; min-width: 250px; }
+        .search-box-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--secondary); }
+        .search-input { width: 100%; padding: 12px 12px 12px 42px; font-size: 15px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; outline: none; transition: all 0.2s ease; }
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.1); }
+        
+        .filter-btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-btn { background-color: #f1f5f9; color: var(--secondary); border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .filter-btn:hover { background-color: #e2e8f0; color: var(--primary); }
+        .filter-btn.active { background-color: var(--primary); color: #ffffff; border-color: var(--primary); }
+        .stats-indicator { font-size: 13px; color: var(--secondary); margin-top: -10px; margin-bottom: 20px; font-weight: 500; }
+
+        .dictionary-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
+        .dict-card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, border-color 0.2s ease; }
+        .dict-card:hover { border-color: #cbd5e1; }
+        .dict-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; border-bottom: 1px dashed var(--border); padding-bottom: 12px; margin-bottom: 15px; }
+        .dict-term-group h3 { font-family: 'Lora', serif; font-size: 22px; color: var(--primary); display: inline-flex; align-items: center; gap: 12px; }
+        .dict-tamil-script { font-family: 'Lora', serif; font-size: 18px; color: var(--secondary); font-weight: normal; }
+        
+        .tag-category { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 12px; background-color: #f1f5f9; color: var(--secondary); }
+        .tag-category.verb-auxiliary { background-color: #eff6ff; color: #1e40af; }
+        .tag-category.suffix { background-color: #fdf2f8; color: #9d174d; }
+        .tag-category.phrases { background-color: #ecfdf5; color: #065f46; }
+        .tag-category.vocabulary { background-color: #fffbeb; color: #92400e; }
+
+        .dict-meaning { font-size: 15px; color: var(--secondary); margin-bottom: 15px; }
+        .dict-meaning strong { color: var(--primary); }
+        .conjugation-box { background-color: #fafaf9; border: 1px solid #f2f2ee; border-radius: 8px; padding: 15px 20px; }
+        .conjugation-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); margin-bottom: 10px; }
+        .conjugation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .conjugation-item { font-size: 13.5px; position: relative; }
+        .conj-label { color: var(--secondary); font-size: 11.5px; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 2px; }
+        .conj-val-container { display: flex; align-items: center; gap: 8px; }
+        .conj-val { font-family: 'Lora', serif; font-weight: 600; color: var(--primary); }
+
+        .play-audio-btn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 14px; padding: 2px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; transition: all 0.2s ease; }
+        .play-audio-btn:hover { background-color: var(--accent-light); transform: scale(1.1); }
+        .play-audio-btn.playing { color: var(--success); animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .conj-desc { font-size: 12px; color: var(--secondary); font-style: italic; display: block; margin-top: 2px; }
+        .no-results { display: none; text-align: center; padding: 50px; background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; color: var(--secondary); }
+        .no-results i { font-size: 40px; margin-bottom: 15px; color: #cbd5e1; }
+        .floating-action { position: fixed; bottom: 40px; right: 40px; z-index: 100; }
+        .print-btn { background-color: var(--accent); color: #ffffff; border: none; border-radius: 50px; padding: 16px 28px; font-size: 15px; font-weight: 600; box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s ease; }
+        .print-btn:hover { transform: translateY(-2px); background-color: #92400e; }
+
+        @media print {
+            body { background-color: #ffffff; color: #000000; font-size: 10pt; }
+            .floating-action, .controls-container, .quick-ref-section, .play-audio-btn { display: none !important; }
+            .app-container { padding: 0; max-width: 100%; }
+            .dict-card { box-shadow: none !important; border: none !important; border-bottom: 1px solid #ccc !important; border-radius: 0 !important; page-break-inside: avoid; padding: 15px 0 !important; }
+            .conjugation-box { background-color: #fafafa !important; border: 1px solid #ddd !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-action no-print">
+        <button onclick="window.print()" class="print-btn">
+            <i class="fa-solid fa-file-pdf"></i> Print / Save Dictionary PDF
+        </button>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <h1>Heritage Tanglish–English Companion Dictionary</h1>
+            <p>100 Conjugation Rules, Agglutinative Suffixes, Phrases, and Essential Vocabulary with Native Audio Player</p>
+        </header>
+
+        <section class="quick-ref-section">
+            <h2>The Three Key Formulas of Heritage Tanglish</h2>
+            <div class="quick-ref-grid">
+                <div class="quick-ref-card">
+                    <h3><i class="fa-solid fa-gears"></i> 1. The English Verb Formula</h3>
+                    <p>To use an English verb, take the bare action stem and append <strong>paṇṇu</strong> (do). This converts it instantly into a grammatically active Tamil verb. <br><em>Example: click + paṇṇu = click-paṇṇu (to click/photograph)</em></p>
+                </div>
+                <div class="quick-ref-card">
+                    <h3><i class="fa-solid fa-puzzle-piece"></i> 2. The Noun "U" Buffer</h3>
+                    <p>English nouns ending in a hard consonant receive a soft terminal <strong>-u</strong> vowel, aligning the phonetics naturally into Tamil sentence structures.<br><em>Example: Cold + -u = Cold-u (The winter cold)</em></p>
+                </div>
+                <div class="quick-ref-card">
+                    <h3><i class="fa-solid fa-link"></i> 3. Agglutinative Case Suffixes</h3>
+                    <p>Case markings (possessive, dative, locative) are appended directly to the end of nouns, whether they are English or Tamil.<br><em>Example: Sofa + -la = Sofa-la (On the sofa)</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="controls-container no-print">
+            <div class="search-row">
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by English, Tanglish, or Tamil script...">
+                </div>
+            </div>
+            <div class="filter-btn-group">
+                <button class="filter-btn active" onclick="filterCategory('all', this)">All Words</button>
+                <button class="filter-btn" onclick="filterCategory('verb-auxiliary', this)">Verbs & Auxiliaries</button>
+                <button class="filter-btn" onclick="filterCategory('suffix', this)">Agglutinative Suffixes</button>
+                <button class="filter-btn" onclick="filterCategory('phrases', this)">Everyday Phrases</button>
+                <button class="filter-btn" onclick="filterCategory('vocabulary', this)">Essential Vocabulary</button>
+            </div>
+        </section>
+
+        <div class="stats-indicator" id="statsIndicator">Showing 100 entries</div>
+
+        <section class="dictionary-grid" id="dictionaryGrid"></section>
+
+        <div class="no-results" id="noResults">
+            <i class="fa-solid fa-folder-open"></i>
+            <p>No Tanglish vocabulary matches your search. Try using simpler terms!</p>
+        </div>
+    </div>
+
+    <script>
+        // Data set normalized cleanly with sequential entry IDs matching your file structure[cite: 1]
+        const dictionaryData = [
+            {
+                term: "paṇṇu",
+                tamil: "பண்ணு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Auxiliary verb meaning <strong>'to do'</strong> or <strong>'to make.'</strong> Used as the universal hook to integrate English actions into Tanglish[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Request (-nga)", val: "...paṇṇu-nga", id: "1_1", desc: "Please do [Action]" },
+                    { label: "Future Tense (Plural/We)", val: "...paṇṇu-vom", id: "1_2", desc: "We will do [Action]" },
+                    { label: "Past Tense (Plural/We)", val: "paṇṇi-ni-tom", id: "1_3", desc: "We completed [Action]" }
+                ]
+            },
+            {
+                term: "aagu / aayiduchu",
+                tamil: "ஆகு / ஆயிடுச்சு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Auxiliary verb meaning <strong>'to become'</strong> or <strong>'to be completed.'</strong> Used in Tanglish to denote states of being or passive arrivals[cite: 1].",
+                conjugations: [
+                    { label: "Past Tense (We became/reached)", val: "reach aayitom", id: "2_1", desc: "We arrived" },
+                    { label: "Past Tense (It became/adjusted)", val: "set aayi-duchu", id: "2_2", desc: "It got adjusted" },
+                    { label: "Past Tense (They became)", val: "set aay-itaanga", id: "2_3", desc: "They settled in" }
+                ]
+            },
+            {
+                term: "kodu",
+                tamil: "கொடு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to give.'</strong> Used as a primary command or request suffix[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Request", val: "kodu-nga", id: "3_1", desc: "Please give" },
+                    { label: "Past Tense (I gave)", val: "koduthen", id: "3_2", desc: "I gave" },
+                    { label: "Future Tense (We will give)", val: "kodupom", id: "3_3", desc: "We will give" }
+                ]
+            },
+            {
+                term: "vaangu",
+                tamil: "வாங்கு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to buy'</strong> or <strong>'to purchase/receive.'</strong> Extensively used for shopping scenarios in T-Nagar[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Request", val: "vaangu-nga", id: "4_1", desc: "Please buy/get" },
+                    { label: "Past Tense (We bought)", val: "vaangi-nom", id: "4_2", desc: "We bought" },
+                    { label: "Future Tense (I will buy)", val: "vaangu-vain", id: "4_3", desc: "I will buy" }
+                ]
+            },
+            {
+                term: "kelhambu",
+                tamil: "கிளம்பு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to start a journey'</strong> or <strong>'to leave.'</strong> Essential when packing or calling taxis[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Request", val: "kelhambu-nga", id: "5_1", desc: "Please start/leave" },
+                    { label: "Plural/We Future", val: "kelhambu-vom", id: "5_2", desc: "We will start" },
+                    { label: "Past Tense (We left)", val: "kelhambi-nom", id: "5_3", desc: "We started/left" }
+                ]
+            },
+            {
+                term: "sollu",
+                tamil: "சொல்லு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to tell'</strong> or <strong>'to say[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Respectful Command", val: "sollu-nga", id: "6_1", desc: "Please tell" },
+                    { label: "Past Tense (They said)", val: "sonnaanga", id: "6_2", desc: "They said (Respectful)" },
+                    { label: "Future Tense (We will tell)", val: "sollo-m", id: "6_3", desc: "We will say" }
+                ]
+            },
+            {
+                term: "kelhu",
+                tamil: "கேளு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to ask'</strong> or <strong>'to listen/hear[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Respectful Command", val: "kelhu-nga", id: "7_1", desc: "Please ask/listen" },
+                    { label: "Past Tense (I asked)", val: "ketten", id: "7_2", desc: "I asked" },
+                    { label: "Negative (Didn't hear)", val: "ketkala", id: "7_3", desc: "Didn't hear" }
+                ]
+            },
+            {
+                term: "ukkaaru",
+                tamil: "உட்காரு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to sit.'</strong> Crucial for domestic positioning near Paati[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Command", val: "ukkaaru-nga", id: "8_1", desc: "Please sit down" },
+                    { label: "Past Tense (We sat)", val: "ukkaandho-m", id: "8_2", desc: "We sat down" },
+                    { label: "Future Tense (We will sit)", val: "ukkaaru-vom", id: "8_3", desc: "We will sit" }
+                ]
+            },
+            {
+                term: "vaa",
+                tamil: "வா",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to come[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Respectful Command", val: "vaa-nga", id: "9_1", desc: "Please come" },
+                    { label: "Past Tense (They came)", val: "vandhaanga", id: "9_2", desc: "They came (Respectful)" },
+                    { label: "Future Tense (We will come)", val: "varo-m", id: "9_3", desc: "We will come" }
+                ]
+            },
+            {
+                term: "po",
+                tamil: "போ",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to go[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Respectful Command", val: "po-nga", id: "10_1", desc: "Please go" },
+                    { label: "Past Tense (We went)", val: "pono-m", id: "10_2", desc: "We went" },
+                    { label: "Future Tense (We will go)", val: "po-vom", id: "10_3", desc: "We will go" }
+                ]
+            },
+            {
+                term: "thoongu",
+                tamil: "தூங்கு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to sleep[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Respectful Command", val: "thoongu-nga", id: "11_1", desc: "Please sleep" },
+                    { label: "Past Tense (We slept)", val: "thoongi-nom", id: "11_2", desc: "We slept" },
+                    { label: "Future Tense (We will sleep)", val: "thoongu-vom", id: "11_3", desc: "We will sleep" }
+                ]
+            },
+            {
+                term: "saapdu",
+                tamil: "சாப்பிடு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to eat[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Respectful Command", val: "saapdu-nga", id: "12_1", desc: "Please eat" },
+                    { label: "Past Tense (We ate)", val: "saapto-m", id: "12_2", desc: "We ate" },
+                    { label: "Future Tense (We will eat)", val: "saapdu-vom", id: "12_3", desc: "We will eat" }
+                ]
+            },
+            {
+                term: "kudi",
+                tamil: "குடி",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to drink.'</strong> Key for coffee, tea, and safe boiled water[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Command", val: "kudi-nga", id: "13_1", desc: "Please drink" },
+                    { label: "Past Tense (We drank)", val: "kudi-chom", id: "13_2", desc: "We drank" },
+                    { label: "Future Tense (We will drink)", val: "kudi-ppom", id: "13_3", desc: "We will drink" }
+                ]
+            },
+            {
+                term: "vilhaiyaadu",
+                tamil: "விளையாடு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to play.'</strong> Good when discussing kids, games, or pets[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Command", val: "vilhaiyaadu-nga", id: "14_1", desc: "Please play" },
+                    { label: "Past Tense (We played)", val: "vilhaiyaadi-nom", id: "14_2", desc: "We played" },
+                    { label: "Future Tense (We will play)", val: "vilhaiyaadu-vom", id: "14_3", desc: "We will play" }
+                ]
+            },
+            {
+                term: "neneppu",
+                tamil: "நினைப்பு",
+                category: "verb-auxiliary",
+                categoryLabel: "Verbs & Auxiliaries",
+                meaning: "Verb meaning <strong>'to think'</strong> or <strong>'to assume/hope[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Present Tense (I think)", val: "naan neneikiren", id: "15_1", desc: "I think" },
+                    { label: "Past Tense (I thought)", val: "naan neneichen", id: "15_2", desc: "I thought" },
+                    { label: "Future Tense (We will think)", val: "naanga neneipom", id: "15_3", desc: "We will think" }
+                ]
+            },
+            {
+                term: "-nga",
+                tamil: "-ங்கள்",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "Plural or <strong>respectful honorific suffix</strong>. Appended to verbs to show high respect to an elder (like Paati) or when addressing a couple/group of people[cite: 1].",
+                conjugations: [
+                    { label: "Welcoming (Vaa + -nga)", val: "Vaa-nga", id: "16_1", desc: "Come in (Respectful)" },
+                    { label: "Seating (Ukkaaru + -nga)", val: "Ukkaaru-nga", id: "16_2", desc: "Please sit (Respectful)" },
+                    { label: "With English Verbs", val: "Reduce paṇṇu-nga", id: "16_3", desc: "Please reduce/lower it" }
+                ]
+            },
+            {
+                term: "-ukku",
+                tamil: "-உக்கு",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The dative case suffix, translating to <strong>'for'</strong> or <strong>'to.'</strong> Appended directly to both English and Tamil nouns to show recipient or preference[cite: 1].",
+                conjugations: [
+                    { label: "First Person (En + -ukku)", val: "En-akku", id: "17_1", desc: "For me / To me" },
+                    { label: "For the Partner", val: "En partner-ukku", id: "17_2", desc: "For my partner" },
+                    { label: "For Grandma", val: "Paati-ukku", id: "17_3", desc: "For Grandma" }
+                ]
+            },
+            {
+                term: "-la",
+                tamil: "-ல",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The locative case suffix, translating to <strong>'in,'</strong> <strong>'on,'</strong> <strong>'at,'</strong> or <strong>'by means of.'</strong> Used heavily to designate domestic places or transit routes[cite: 1].",
+                conjugations: [
+                    { label: "Inside the Room", val: "Room-la", id: "18_1", desc: "In the room" },
+                    { label: "During Transit", val: "Flight-la", id: "18_2", desc: "On the flight" },
+                    { label: "Food Specifics", val: "Chutney-la spice", id: "18_3", desc: "The spice level in the chutney" }
+                ]
+            },
+            {
+                term: "-oda",
+                tamil: "-ஓட",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The possessive case suffix, translating to <strong>'of'</strong> or indicating ownership (apostrophe **'s**). Crucial for establishing family lineage and shared property[cite: 1].",
+                conjugations: [
+                    { label: "First Person Singular", val: "Enn-oda", id: "19_1", desc: "My" },
+                    { label: "First Person Plural", val: "Engal-oda", id: "19_2", desc: "Our (Couple possessive)" },
+                    { label: "Partner's Lineage", val: "En partner-oda family", id: "19_3", desc: "My partner's family" }
+                ]
+            },
+            {
+                term: "-ta / -kitta",
+                tamil: "-கிட்ட / -ட",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The contact/possession suffix, meaning <strong>'with'</strong> or <strong>'at/to'</strong> a living person. Equivalent to French 'chez'[cite: 1].",
+                conjugations: [
+                    { label: "With Me", val: "En-kitta", id: "20_1", desc: "With me / Near me" },
+                    { label: "To/With Partner", val: "Partner-kitta", id: "20_2", desc: "With the partner" },
+                    { label: "At Grandma's", val: "Paati-kitta", id: "20_3", desc: "With/To Grandma" }
+                ]
+            },
+            {
+                term: "-kooda",
+                tamil: "-கூட",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The associative suffix, translating to <strong>'along with'</strong> or <strong>'also/even.'</strong> Used to describe joint couple actions[cite: 1].",
+                conjugations: [
+                    { label: "With the Partner", val: "En partner-kooda", id: "21_1", desc: "Along with my partner" },
+                    { label: "With Grandma", val: "Paati-kooda", id: "21_2", desc: "Along with Grandma" },
+                    { label: "Even That", val: "Adhu-kooda", id: "21_3", desc: "Even that / That also" }
+                ]
+            },
+            {
+                term: "-ah",
+                tamil: "-ஆ",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The adverbializer suffix. Appended to English or Tamil adjectives to turn them into adverbs (e.g., converting 'safe' to 'safely')[cite: 1].",
+                conjugations: [
+                    { label: "Safe -> Safely", val: "Safe-ah", id: "22_1", desc: "Safely" },
+                    { label: "Easy -> Easily", val: "Easy-ah", id: "22_2", desc: "Easily" },
+                    { label: "Comfort -> Comfortably", val: "Comfort-ah", id: "22_3", desc: "Comfortably" }
+                ]
+            },
+            {
+                term: "-nu",
+                tamil: "-னு",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The quotative/complementizer suffix. Used to denote **'called as,'** **'saying that,'** or to signal quotes[cite: 1].",
+                conjugations: [
+                    { label: "Saying 'No'", val: "'No'-nu sollu-nga", id: "23_1", desc: "Please say 'no'" },
+                    { label: "Name Designation", val: "Chennai-nu kooptuvaanga", id: "23_2", desc: "They call it Chennai" },
+                    { label: "Thinking That", val: "Varom-nu neneichen", id: "23_3", desc: "I thought we would come" }
+                ]
+            },
+            {
+                term: "-dhaan",
+                tamil: "-தான்",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The emphasis suffix, translating to <strong>'only,'</strong> <strong>'indeed,'</strong> or <strong>'exactly.'</strong> It focuses attention intensely on a single choice[cite: 1].",
+                conjugations: [
+                    { label: "This One Only", val: "Idhu-dhaan", id: "24_1", desc: "This is indeed the one / This only" },
+                    { label: "Today Only", val: "Inniki-dhaan", id: "24_2", desc: "Exactly today / Only today" },
+                    { label: "For Me Only", val: "Enakku-dhaan", id: "24_3", desc: "Only for me" }
+                ]
+            },
+            {
+                term: "-um",
+                tamil: "-உம்",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The coordinating suffix, translating to <strong>'and'</strong> or <strong>'both/also.'</strong> Added to each item to create a conjunct list[cite: 1].",
+                conjugations: [
+                    { label: "Me and Partner", val: "Naan-um partner-um", id: "25_1", desc: "Both myself and my partner" },
+                    { label: "Rice and Sambar", val: "Saadham-um sambar-um", id: "25_2", desc: "Both rice and sambar" },
+                    { label: "Also There", val: "Anga-yum", id: "25_3", desc: "Also there / Even there" }
+                ]
+            },
+            {
+                term: "-irundhu / -lerundhu",
+                tamil: "-இருந்து / -லிருந்து",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The ablative suffix, meaning <strong>'from.'</strong> Crucial for explaining origin[cite: 1].",
+                conjugations: [
+                    { label: "From the US", val: "US-lerundhu", id: "26_1", desc: "From the United States" },
+                    { label: "From Chennai", val: "Chennai-lerundhu", id: "26_2", desc: "From Chennai" },
+                    { label: "From the Room", val: "Room-lerundhu", id: "26_3", desc: "From inside the room" }
+                ]
+            },
+            {
+                term: "-ah? (Question)",
+                tamil: "-ஆ?",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The yes/no question suffix. Appended to the end of words to transform them into inquiries[cite: 1].",
+                conjugations: [
+                    { label: "Is it Safe?", val: "Safe-ah?", id: "27_1", desc: "Is it safe?" },
+                    { label: "Is it Coffee?", val: "Coffee-ah?", id: "27_2", desc: "Is this coffee?" },
+                    { label: "Grandma?", val: "Paati-ah?", id: "27_3", desc: "Is it you, Grandma?" }
+                ]
+            },
+            {
+                term: "-me / -ume",
+                tamil: "-மே",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The collective suffix meaning <strong>'all of'</strong> or <strong>'both of.'</strong>",
+                conjugations: [
+                    { label: "Both of Us", val: "Rendu perukku-me", id: "28_1", desc: "For both of us" },
+                    { label: "All of Them", val: "Ellarukku-me", id: "28_2", desc: "For absolutely everyone" },
+                    { label: "The Whole Thing", val: "Ellame", id: "28_3", desc: "All of it / Everything" }
+                ]
+            },
+            {
+                term: "-maadri",
+                tamil: "-மாதிரி",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The comparative suffix meaning <strong>'like'</strong> or <strong>'similar to[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "Like a Child", val: "Pillai-maadri", id: "29_1", desc: "Just like my own child" },
+                    { label: "Like the US", val: "US-maadri", id: "29_2", desc: "Similar to the United States" },
+                    { label: "Like Yesterday", val: "Nethu-maadri", id: "29_3", desc: "Just like yesterday" }
+                ]
+            },
+            {
+                term: "-kaaga",
+                tamil: "-க்காக",
+                category: "suffix",
+                categoryLabel: "Agglutinative Suffixes",
+                meaning: "The benefactive suffix, meaning <strong>'for the sake of'</strong> or <strong>'exclusively for[cite: 1].'</strong>",
+                conjugations: [
+                    { label: "For Grandma's Sake", val: "Paati-kaaga", id: "30_1", desc: "For the sake of Grandma" },
+                    { label: "For My Partner", val: "En partner-kaaga", id: "30_2", desc: "Exclusively for my partner" },
+                    { label: "For the Trip", val: "Trip-kaaga", id: "30_3", desc: "For the sake of the trip" }
+                ]
+            },
+            {
+                term: "Poitu Varain",
+                tamil: "போயிட்டு வரேன்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Literally translates to <strong>'I go and will return'</strong>. This is the culturally mandatory phrase used in place of 'Goodbye.'[cite: 1]",
+                conjugations: [
+                    { label: "As a Couple (Plural)", val: "Naanga poitu varom", id: "31_1", desc: "We are heading out now, but we will return soon" },
+                    { label: "Grandma's Response", val: "Bhadhram-ah poyitu vaanga pa", id: "31_2", desc: "Go and return safely, my dear children" },
+                    { label: "Individual", val: "Naan poitu varain", id: "31_3", desc: "I go and will return (singular)" }
+                ]
+            },
+            {
+                term: "Epdi irukeenga?",
+                tamil: "எப்படி இருக்கீங்க?",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Respectful greeting meaning <strong>'How are you?'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Standard Positive Reply", val: "Naan nalla iruken", id: "32_1", desc: "I am doing well" },
+                    { label: "Anxious / Sickness Reply", val: "Udambu konjam tired-ah irukku", id: "32_2", desc: "The body is feeling a bit tired/unwell" },
+                    { label: "For the Couple", val: "Naanga nalla irukom", id: "32_3", desc: "We are doing well" }
+                ]
+            },
+            {
+                term: "Vayiru full / Podhum",
+                tamil: "வயிறு ஃபுல் / போதும்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "<strong>'My stomach is full'</strong> and <strong>'Enough.'</strong> These are your shield phrases when navigating older relatives' heavy hospitality[cite: 1].",
+                conjugations: [
+                    { label: "Declining Extra Food", val: "Vendaam Paati, podhum! Vayiru full", id: "33_1", desc: "No Grandma, that's enough! My stomach is full" },
+                    { label: "For the Partner", val: "Avanga vanished full, dosa vendaam", id: "33_2", desc: "Their stomach is full, they don't want another dosa" },
+                    { label: "Mild Refusal", val: "Podhum Paati", id: "33_3", desc: "That is enough, Grandma" }
+                ]
+            },
+            {
+                term: "Romba nandri",
+                tamil: "ரொம்ப நன்றி",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Standard respectful thank-you phrase meaning <strong>'Thank you very much.'</strong> Used with elders, drivers, and service staff[cite: 1].",
+                conjugations: [
+                    { label: "Respectful Thanks", val: "Romba nandri, Paati", id: "34_1", desc: "Thank you so much, Grandma" },
+                    { label: "To Help Staff", val: "Nandri, anna", id: "34_2", desc: "Thank you, elder brother" },
+                    { label: "Couple Context", val: "Engaloda nandri", id: "34_3", desc: "Our thanks" }
+                ]
+            },
+            {
+                term: "Bhadhram-ah poyitu vaanga",
+                tamil: "பத்திரமா போயிட்டு வாங்க",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Warm elder's departure blessing, meaning <strong>'Go safely and return.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Directed to Couple", val: "Rendu perum bhadhram-ah poyitu vaanga", id: "35_1", desc: "Both of you go safely and return" },
+                    { label: "Standard Elder Version", val: "Bhadhram-ah poyitu vaanga pa", id: "35_2", desc: "Go and return safely, my dear children" },
+                    { label: "Informal Response", val: "Naan bhadhram-ah poren", id: "35_3", desc: "I am going safely" }
+                ]
+            },
+            {
+                term: "Enna aachu?",
+                tamil: "என்ன ஆச்சு?",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Common phrase translating to <strong>'What happened?'</strong> Used when checking on someone's health or reaction[cite: 1].",
+                conjugations: [
+                    { label: "Checking on Paati", val: "Paati, enna aachu?", id: "36_1", desc: "Grandma, what happened?" },
+                    { label: "To Partner", val: "Honey, enna aachu?", id: "36_2", desc: "Honey, what happened?" },
+                    { label: "Response", val: "Onnum aagala", id: "36_3", desc: "Nothing happened" }
+                ]
+            },
+            {
+                term: "Onnum illai",
+                tamil: "ஒன்னும் இல்லை",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Reassuring phrase translating to <strong>'Nothing'</strong> or <strong>'It's nothing/OK.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Answering 'What happened?'", val: "Onnum illai Paati, safe dhaan", id: "37_1", desc: "Nothing Grandma, we are completely safe" },
+                    { label: "Health reassurance", val: "Onnum illai, tired-ah irukku", id: "37_2", desc: "It's nothing, just a bit tired" },
+                    { label: "Dismissive comfort", val: "Onnum problem illai", id: "37_3", desc: "There is no problem at all" }
+                ]
+            },
+            {
+                term: "Romba santhosham",
+                tamil: "ரொம்ப சந்தோஷம்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "A heartfelt emotional exclamation meaning <strong>'Very happy'</strong> or <strong>'Delighted.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Seeing Grandma", val: "Ungalai paarthadhula romba santhosham", id: "38_1", desc: "So happy to see you" },
+                    { label: "Receiving Gift", val: "Engaluku romba santhosham", id: "38_2", desc: "We are very happy (plural)" },
+                    { label: "Expressing news", val: "Inniki romba santhosham", id: "38_3", desc: "Today is a very happy day" }
+                ]
+            },
+            {
+                term: "Enakku puriyala",
+                tamil: "எனக்கு புரியலை",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Essential linguistic safety phrase translating to <strong>'I don't understand.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Polite Request", val: "Enakku sariya puriyala, Paati", id: "39_1", desc: "I didn't understand properly, Grandma" },
+                    { label: "For Partner", val: "En partner-ukku puriyala", id: "39_2", desc: "My partner doesn't understand" },
+                    { label: "With Suffix", val: "Enakku adhu puriyave illai", id: "39_3", desc: "I didn't understand that at all" }
+                ]
+            },
+            {
+                term: "Konjam medhuva pesunga",
+                tamil: "கொஞ்சம் மெதுவா பேசுங்க",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Polite request translating to <strong>'Please speak a bit slowly.'</strong> Essential to counter fast spoken Tamil[cite: 1].",
+                conjugations: [
+                    { label: "To Elders", val: "Paati, konjam medhuva pesunga", id: "40_1", desc: "Grandma, please speak a bit slowly" },
+                    { label: "To Auto Drivers", val: "Anna, konjam medhuva pesunga", id: "40_2", desc: "Brother, please speak a bit slowly" },
+                    { label: "Pleading", val: "Konjam slowly pesunga please", id: "40_3", desc: "Please speak a bit slowly" }
+                ]
+            },
+            {
+                term: "Thirumba sollunga",
+                tamil: "திரும்ப சொல்லுங்க",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Respectful request meaning <strong>'Please say it again'</strong> or <strong>'Pardon?'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "When not hearing Paati", val: "Sariya ketkala, thirumba sollunga", id: "41_1", desc: "I didn't hear properly, please say it again" },
+                    { label: "Respectful repeat", val: "Paati, please thirumba sollunga", id: "41_2", desc: "Grandma, please tell me again" },
+                    { label: "Direct", val: "Konjam repeat-sollunga", id: "41_3", desc: "Please repeat it" }
+                ]
+            },
+            {
+                term: "Romba super!",
+                tamil: "ரொம்ப சூப்பர்!",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Universal high-energy praise meaning <strong>'Very superb!'</strong> or <strong>'Excellent!'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Praising Sambar", val: "Sambar taste romba super, Paati", id: "42_1", desc: "The sambar taste is very superb, Grandma" },
+                    { label: "Praising US Home Photo", val: "Photo view romba super", id: "42_2", desc: "The photo view is very superb" },
+                    { label: "General Agreement", val: "Super, Paati", id: "42_3", desc: "Super, Grandma" }
+                ]
+            },
+            {
+                term: "Sariya ketkala",
+                tamil: "சரியா கேட்கலை",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Statement meaning <strong>'I/We didn't hear properly.'</strong> Excellent for managing domestic volume[cite: 1].",
+                conjugations: [
+                    { label: "To Grandma", val: "Paati, sariya ketkala, close-ah vaanga", id: "43_1", desc: "Grandma, I didn't hear properly, come close" },
+                    { label: "Due to Fan Noise", val: "Fan sound-ala sariya ketkala", id: "43_2", desc: "Due to the fan sound, I didn't hear properly" },
+                    { label: "For Grandma's ears", val: "Paati-ukku sariya ketkala", id: "43_3", desc: "Grandma didn't hear properly" }
+                ]
+            },
+            {
+                term: "Kootam over-ah irukku",
+                tamil: "கூட்டம் ஓவரா இருக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Vibrant observation meaning <strong>'The crowd is overwhelming/too much.'</strong> Great for T-Nagar shopping[cite: 1].",
+                conjugations: [
+                    { label: "In Pandi Bazaar", val: "Platform-la kootam over-ah irukku", id: "44_1", desc: "The crowd on the platform is too much" },
+                    { label: "Warning Partner", val: "Inniki store-la kootam over-ah irukku", id: "44_2", desc: "The store is way too crowded today" },
+                    { label: "Avoider", val: "Kootam over, separate room safe", id: "44_3", desc: "The crowd is too much, the side room is safer" }
+                ]
+            },
+            {
+                term: "Veeyyal over-ah irukku",
+                tamil: "வெயில் ஓவரா இருக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Climate comment meaning <strong>'The hot sun/heat is too intense.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Exiting Airport", val: "Chennai-la veeyyal over-ah irukku", id: "45_1", desc: "The sun's heat is too intense in Chennai" },
+                    { label: "Afternoon Walk", val: "Afternoon veeyyal over, evening poga-laam", id: "45_2", desc: "The afternoon sun is too hot, let's go in the evening" },
+                    { label: "Hydration trigger", val: "Veeyyal over, elaneer kudi-nga", id: "45_3", desc: "The sun is too hot, drink tender coconut" }
+                ]
+            },
+            {
+                term: "Safe-ah reach aayitom",
+                tamil: "சேஃபா ரீச் ஆயிட்டோம்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Crucial reassurance update meaning <strong>'We have arrived safely.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "To Paati on Arrival", val: "Naanga room-la safe-ah reach aayitom", id: "46_1", desc: "We arrived safely in our room" },
+                    { label: "Back in US", val: "US house-la safe-ah reach aayitom", id: "46_2", desc: "We have reached our US home safely" },
+                    { label: "Update to family", val: "Taxi-la safe-ah reach aayitom", id: "46_3", desc: "We arrived safely by taxi" }
+                ]
+            },
+            {
+                term: "Seekram varom",
+                tamil: "சீக்கிரம் வரோம்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Comforting promise meaning <strong>'We will return soon.'</strong> Usually paired with Poitu Varom[cite: 1].",
+                conjugations: [
+                    { label: "Leaving for Outing", val: "Mylapore poyitu seekram varom", id: "47_1", desc: "We are going to Mylapore and will return soon" },
+                    { label: "Next Year Promise", val: "Next year-um seekram varom, Paati", id: "47_2", desc: "We will return soon next year too, Grandma" },
+                    { label: "Partner version", val: "Naanga thirumba seekram varom", id: "47_3", desc: "We will come back again very soon" }
+                ]
+            },
+            {
+                term: "Aasirvaadham paṇṇunga",
+                tamil: "ஆசீர்வாதம் பண்ணுங்க",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Polite and traditional request meaning <strong>'Please bless us.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "During Namaskaram", val: "Engaluku aasirvaadham paṇṇunga, Paati", id: "48_1", desc: "Please bless both of us, Grandma" },
+                    { label: "Respectful request", val: "Unga feet-la touch paṇṇi aasirvaadham vaangurom", id: "48_2", desc: "We touch your feet and receive your blessings" },
+                    { label: "Future hope", val: "Blessings eppovum venum", id: "48_3", desc: "We always need your blessings" }
+                ]
+            },
+            {
+                term: "Udambu epdi irukku?",
+                tamil: "உடம்பு எப்படி இருக்கு?",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Respectful medical check phrase meaning <strong>'How is your physical health?'</strong> Literally, 'How is the body?'[cite: 1]",
+                conjugations: [
+                    { label: "Checking on Grandma", val: "Paati, unga udambu epdi irukku?", id: "49_1", desc: "Grandma, how is your physical health?" },
+                    { label: "Checking on Partner", val: "Udambu epdi irukku, honey?", id: "49_2", desc: "How are you feeling physically, honey?" },
+                    { label: "Healthy reply", val: "Udambu super-ah irukku", id: "49_3", desc: "My body is feeling excellent" }
+                ]
+            },
+            {
+                term: "Kaal-vali epdi irukku?",
+                tamil: "கால் வலி எப்படி இருக்கு?",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Targeted inquiry translating to <strong>'How is your leg/knee pain?'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "To Grandma", val: "Paati, unga arthritis kaal-vali epdi irukku?", id: "50_1", desc: "Grandma, how is your arthritis leg pain?" },
+                    { label: "Pain Relief check", val: "Ointment-ku appram kaal-vali epdi irukku?", id: "50_2", desc: "How is the leg pain after applying the ointment?" },
+                    { label: "Mild response", val: "Kaal-vali konjam kammi-ah irukku", id: "50_3", desc: "The leg pain is slightly lower" }
+                ]
+            },
+            {
+                term: "Room temperature ok-va?",
+                tamil: "ரூம் டெம்பரேச்சர் ஓகேவா?",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Climate check phrase translating to <strong>'Is the room temperature OK?'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Checking Grandma", val: "Paati, unga room temperature ok-va?", id: "51_1", desc: "Grandma, is your room temperature OK?" },
+                    { label: "Checking Partner", val: "AC cool ok-va? Temperature ethalaama?", id: "51_2", desc: "Is the A/C cool enough? Shall I raise the temp?" },
+                    { label: "Agreeing", val: "Temperature perfect-ah ok", id: "51_3", desc: "The temperature is perfectly fine" }
+                ]
+            },
+            {
+                term: "En partner-ukku Tamil sariya theriyadhu",
+                tamil: "என் பார்ட்னருக்கு தமிழ் சரியா தெரியாது",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Linguistic buffer statement meaning <strong>'My partner doesn't know Tamil.'</strong> Sets up the translation role[cite: 1].",
+                conjugations: [
+                    { label: "Explaining to Grandma", val: "Paati, en partner-ukku Tamil sariya theriyadhu", id: "52_1", desc: "Grandma, my partner doesn't know Tamil properly" },
+                    { label: "With Emphasis Suffix", val: "Tamil konjam-kooda sariya theriyadhu", id: "52_2", desc: "They don't know Tamil at all" },
+                    { label: "Adding English ease", val: "But English nalla theriyum", id: "52_3", desc: "But they know English very well" }
+                ]
+            },
+            {
+                term: "Naan translate paṇṇuren",
+                tamil: "நான் டிரான்ஸ்லேட் பண்ணுறேன்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Linguistic service promise meaning <strong>'I will translate.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "To Grandma", val: "Paati, unga advice-a naan translate paṇṇuren", id: "53_1", desc: "Grandma, I will translate your advice for them" },
+                    { label: "To Partner", val: "Don't worry, naan direct translate paṇṇuren", id: "53_2", desc: "Don't worry, I will translate it directly" },
+                    { label: "Future promise", val: "Syllable by syllable translate paṇṇu-vain", id: "53_3", desc: "I will translate it syllable by syllable" }
+                ]
+            },
+            {
+                term: "Taxi/Auto ready-ah irukku",
+                tamil: "டாக்ஸி/ஆட்டோ ரெடியா இருக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Logistical announcement translating to <strong>'The taxi/auto is ready.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Departure alert", val: "Paati, taxi veeliya ready-ah irukku", id: "54_1", desc: "Grandma, the taxi is ready outside" },
+                    { label: "To Partner", val: "Auto ready, bags edunga", id: "54_2", desc: "The auto is ready, pick up the bags" },
+                    { label: "Driver check", val: "Anna ready-ah irukara", id: "54_3", desc: "Is the driver ready?" }
+                ]
+            },
+            {
+                term: "Chutney-la kaaram kammi",
+                tamil: "சட்னியில காரம் கம்மி",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Culinary safety update meaning <strong>'The spice level in the chutney is low.'</strong> Excellent for protective partner care[cite: 1].",
+                conjugations: [
+                    { label: "Reassuring Partner", val: "Indha white chutney-la kaaram kammi", id: "55_1", desc: "The spice in this white chutney is low" },
+                    { label: "Ordering from Staff", val: "Anna, side chutney-la kaaram kammi-ah podunga", id: "55_2", desc: "Brother, put low spice in the side chutney" },
+                    { label: "Confirming", val: "Taste safe, kaaram kammi dhaan", id: "55_3", desc: "The taste is safe, the spice is indeed low" }
+                ]
+            },
+            {
+                term: "Coffee super-ah irukku",
+                tamil: "காபி சூப்பரா இருக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Universal hospitality validation meaning <strong>'The coffee is superb.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "To Grandma", val: "Morning filter coffee romba super-ah irukku Paati", id: "56_1", desc: "The morning filter coffee is very superb, Grandma" },
+                    { label: "To Host", val: "Sugar-illa coffee super-ah irukku", id: "56_2", desc: "The sugarless coffee is superb" },
+                    { label: "Expressing warmth", val: "Kai-manam coffee super", id: "56_3", desc: "This magical hand-made coffee is superb" }
+                ]
+            },
+            {
+                term: "Naanga bath-ukku porom",
+                tamil: "நாங்க பாத்துக்கு போறோம்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Domestic transition phrase translating to <strong>'We are going to take a bath/shower.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "To Grandma", val: "Paati, long flight travel fatigue koraika bath-ukku porom", id: "57_1", desc: "Grandma, we are going for a bath to reduce travel fatigue" },
+                    { label: "Morning Routine", val: "Naanga breakfast-ukku munnaadi bath-ukku porom", id: "57_2", desc: "We are going for a bath before breakfast" },
+                    { label: "Plural target", val: "Rendu perum bath-ukku porom", id: "57_3", desc: "Both of us are going to bathe" }
+                ]
+            },
+            {
+                term: "Medicine saapteengala?",
+                tamil: "மெடிசின் சாப்பிட்டீங்களா?",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Respectful elder check translating to <strong>'Did you take your medicine/pills?'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Morning check", val: "Paati, morning dose thyroid medicine saapteengala?", id: "58_1", desc: "Grandma, did you take your morning thyroid medicine?" },
+                    { label: "After dinner check", val: "Dinner-ku appram arthritis pill saapteengala?", id: "58_2", desc: "Did you take your arthritis pill after dinner?" },
+                    { label: "Caretaker status", val: "Medicine safe-ah saaptaanga", id: "58_3", desc: "She took her medicine safely" }
+                ]
+            },
+            {
+                term: "Indha gift ungalukku",
+                tamil: "இந்த கிப்ட் உங்களுக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Generous offer phrase translating to <strong>'This gift is for you.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Offering Saree", val: "Paati, indha soft silk gift ungalukku", id: "59_1", desc: "Grandma, this soft silk gift is for you" },
+                    { label: "From both of them", val: "Engaloda trip gift ungalukku", id: "59_2", desc: "Our trip gift is for you" },
+                    { label: "Card presentation", val: "Indha small photo card ungalukku", id: "59_3", desc: "This small photo card is for you" }
+                ]
+            },
+            {
+                term: "US-la severe snow peiyum",
+                tamil: "யுஎஸ்ல செவியர் ஸ்னோ பெய்யும்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Weather contrast statement translating to <strong>'In the US, it snows heavily.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "To Grandma", val: "Winter season-la US-la severe snow peiyum, Paati", id: "60_1", desc: "During the winter season, it snows heavily in the US, Grandma" },
+                    { label: "Explaining work from home", val: "Snow peiyumbodhu road-la car drive paṇṇala, home work dhaan", id: "60_2", desc: "When it snows we don't drive on the roads, we just work from home" },
+                    { label: "Visual aid", val: "Severe snow photo paarunga", id: "60_3", desc: "Look at the heavy snow photo" }
+                ]
+            },
+            {
+                term: "Pathu nimisham",
+                tamil: "பத்து நிமிஷம்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Temporal phrase meaning <strong>'Ten minutes.'</strong> Universal answer for delay[cite: 1].",
+                conjugations: [
+                    { label: "Taxi Arrival", val: "Taxi pathu nimisham-la ready-ah varum", id: "61_1", desc: "The taxi will be ready and arrive in ten minutes" },
+                    { label: "Bath delay", val: "Pathu nimisham-la bath mudichu varom", id: "61_2", desc: "We will finish bathing and come in ten minutes" },
+                    { label: "Short wait", val: "Pathu nimisham wait paṇṇu-nga", id: "61_3", desc: "Please wait ten minutes" }
+                ]
+            },
+            {
+                term: "Chennai change aayiduchu",
+                tamil: "சென்னை சேஞ்ச் ஆயிடுச்சு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Cultural observation meaning <strong>'Chennai has changed a lot.'</strong> Highly valued topic for conversations with elders[cite: 1].",
+                conjugations: [
+                    { label: "To Grandma", val: "Metro train-ala Chennai change aayiduchu Paati", id: "62_1", desc: "Due to the Metro train, Chennai has changed a lot, Grandma" },
+                    { label: "With Partner", val: "Pandi Bazaar platforms change aayiduchu", id: "62_2", desc: "The Pandi Bazaar platforms have changed a lot" },
+                    { label: "Expressing awe", val: "Traffic, crowd, architecture change-u", id: "62_3", desc: "Traffic, crowd, and architecture have changed a lot" }
+                ]
+            },
+            {
+                term: "Adho ange irukku",
+                tamil: "அதோ அங்கே இருக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Demonstrative locating phrase meaning <strong>'Look there, it is right over there.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Pointing to Remote", val: "Paati, remote adho ange table-la irukku", id: "63_1", desc: "Grandma, the remote is right there on the table" },
+                    { label: "Pointing to Tower", val: "Kovil gopuram adho ange high-ah irukku", id: "63_2", desc: "The temple tower is right there rising high" },
+                    { label: "Visual guidance", val: "Water bottle adho ange room-la irukku", id: "63_3", desc: "The water bottle is right there in the room" }
+                ]
+            },
+            {
+                term: "Idho inge irukku",
+                tamil: "இதோ இங்கே இருக்கு",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Demonstrative locating phrase meaning <strong>'Look here, it is right here.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Handing Pill", val: "Paati, unga thyroid tablet idho inge box-la irukku", id: "64_1", desc: "Grandma, your thyroid tablet is right here in the box" },
+                    { label: "Handing Coffee", val: "Unga hot coffee idho inge irukku, kudi-nga", id: "64_2", desc: "Your hot coffee is right here, please drink it" },
+                    { label: "Bags check", val: "Passport wallet idho inge irukku", id: "64_3", desc: "The passport wallet is right here" }
+                ]
+            },
+            {
+                term: "Naanga rendu perum",
+                tamil: "நாங்க ரெண்டு பேரும்",
+                category: "phrases",
+                categoryLabel: "Everyday Phrases",
+                meaning: "Plural pronoun phrase translating to <strong>'Both of us'</strong> or <strong>'We two.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Praising Hospitality", val: "Naanga rendu perum unga cooking-a enjoy paṇṇi-nom", id: "65_1", desc: "Both of us thoroughly enjoyed your cooking" },
+                    { label: "Leaving for Walk", val: "Naanga rendu perum walk-ukku porom", id: "65_2", desc: "Both of us are going out for a walk" },
+                    { label: "Respectful request", val: "Naanga rendu perum feet touch asirvaadham vaangurom", id: "65_3", desc: "Both of us touch your feet and receive blessings" }
+                ]
+            },
+            {
+                term: "Kaachina thanni",
+                tamil: "காய்ச்சின தண்ணி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Literally translates to <strong>'boiled water.'</strong> Essential travel vocabulary for foreigners or NRI family visiting Chennai. Use this to avoid tap-water related stomach upsets[cite: 1].",
+                conjugations: [
+                    { label: "Asking for Safe Water", val: "Safe-ah kaachina thanni irukka?", id: "66_1", desc: "Is there safely boiled water available?" },
+                    { label: "Bottle Refilling", val: "Water bottle-la filter thanni podunga", id: "66_2", desc: "Please pour filtered water into the bottle" },
+                    { label: "Daily preference", val: "Daily kaachina thanni kudi-ppom", id: "66_3", desc: "We drink boiled water daily" }
+                ]
+            },
+            {
+                term: "Kai-manam",
+                tamil: "கைமணம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Literally <strong>'fragrance of the hand.'</strong> Represents a cook's unique, magical touch that makes their food taste spectacular. Use this to praise Paati's food[cite: 1].",
+                conjugations: [
+                    { label: "Praising her Sambar", val: "Unga kai-manam romba super, Paati", id: "67_1", desc: "Your hand-magic cooking is wonderful, Grandma" },
+                    { label: "Praising her Recipes", val: "Kai-manam recipes list venum", id: "67_2", desc: "We need a list of your magic recipes" },
+                    { label: "General culinary praise", val: "Kai-manam cooking taste zero restaurant matches", id: "67_3", desc: "No restaurant can match your hand-made cooking style" }
+                ]
+            },
+            {
+                term: "Muzham",
+                tamil: "முழம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "A traditional unit of measurement equivalent to <strong>one forearm length</strong>. Used extensively by street vendors when purchasing strings of fresh jasmine flowers (*Malli-poo*)[cite: 1].",
+                conjugations: [
+                    { label: "Ordering Scented Flowers", val: "Rendu muzham poo vaangi kudu", id: "68_1", desc: "Buy and give two forearm lengths of flowers" },
+                    { label: "Street Bargaining", val: "Oru muzham price enna?", id: "68_2", desc: "What is the price for one cubit/forearm length?" },
+                    { label: "With Unit", val: "Three muzham flower select-paṇṇu", id: "68_3", desc: "Select three forearm lengths of flowers" }
+                ]
+            },
+            {
+                term: "Malli-poo",
+                tamil: "மல்லிப்பூ",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Traditional **scented jasmine flowers** tied into dense white strings. Worn by women in their hair or offered at temples[cite: 1].",
+                conjugations: [
+                    { label: "Purchasing for Partner", val: "En partner hair-ukku fresh malli-poo venum", id: "69_1", desc: "I want fresh jasmine flowers for my partner's hair" },
+                    { label: "Smelling Scent", val: "Malli-poo vasam romba super, Paati", id: "69_2", desc: "The scent of the jasmine is spectacular, Grandma" },
+                    { label: "Street vendor", val: "Florist malli-poo bundle display", id: "69_3", desc: "The flower vendor is displaying jasmine" }
+                ]
+            },
+            {
+                term: "Thatha",
+                tamil: "தாத்தா",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Relationship noun meaning <strong>'Grandfather.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Respectful memory", val: "Thatha government service-la honest-ah irundhaar", id: "70_1", desc: "Grandfather was highly honest in his government service" },
+                    { label: "Inquiring Grandma", val: "Thatha work ethic pathi sollunga", id: "70_2", desc: "Please tell us about Grandfather's work ethic" },
+                    { label: "Lineage possessive", val: "Thatha-oda clock safe-ah table-la irukku", id: "70_3", desc: "Grandfather's clock is safely on the table" }
+                ]
+            },
+            {
+                term: "Paati",
+                tamil: "பாட்டி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Relationship noun meaning <strong>'Grandmother.'</strong> The core recipient of your intergenerational journey[cite: 1].",
+                conjugations: [
+                    { label: "Addressing Directly", val: "Epdi irukeenga, Paati?", id: "71_1", desc: "How are you doing, Grandma?" },
+                    { label: "Blessing target", val: "Paati blessings engaluku protection", id: "71_2", desc: "Grandma's blessings are a shield for us" },
+                    { label: "Possessive", val: "Paati-oda room AC cooling set", id: "71_3", desc: "Grandma's room A/C cooling is adjusted" }
+                ]
+            },
+            {
+                term: "Mama",
+                tamil: "மாமா",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Relationship noun meaning **'maternal uncle'** or used politely for adult male elders, including father-in-law[cite: 1].",
+                conjugations: [
+                    { label: "Maternal Uncle", val: "En mama-oda family Chennai-la irukaanga", id: "72_1", desc: "My uncle's family lives in Chennai" },
+                    { label: "Polite Address", val: "Mama, indha chair-la ukkarunga", id: "72_2", desc: "Uncle, please sit on this chair" },
+                    { label: "Uncle's property", val: "Mama land registry safe", id: "72_3", desc: "Uncle's land registry is safe" }
+                ]
+            },
+            {
+                term: "Mami",
+                tamil: "மாமி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Relationship noun meaning **'maternal aunt'** or used politely for adult female elders, including mother-in-law[cite: 1].",
+                conjugations: [
+                    { label: "Maternal Aunt", val: "Mami, coffee-la sugar kammi-ah podunga", id: "73_1", desc: "Aunt, please put low sugar in the coffee" },
+                    { label: "Family network", val: "En mami and mama trip plans share-paṇṇunaanga", id: "73_2", desc: "My aunt and uncle shared their trip plans" },
+                    { label: "Aunt's silk", val: "Mami border silk selection super", id: "73_3", desc: "Aunt's border silk selection is superb" }
+                ]
+            },
+            {
+                term: "Kudumbam",
+                tamil: "குடும்பம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Noun meaning <strong>'family.'</strong> Core anchor of social identity[cite: 1].",
+                conjugations: [
+                    { label: "My Family", val: "Engaloda kudumbam US-la set aayiduchu", id: "74_1", desc: "Our family is settled in the United States" },
+                    { label: "Large Extended Family", val: "Chennai kudumbam romba perusu, Paati", id: "74_2", desc: "The Chennai family is very large, Grandma" },
+                    { label: "Acceptance", val: "Partner-a kudumbam inside welcome-paṇṇunaanga", id: "74_3", desc: "The family welcomed my partner inside" }
+                ]
+            },
+            {
+                term: "Kootu kudumbam",
+                tamil: "கூட்டு குடும்பம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Noun meaning **'joint family'** or **'multi-generational undivided household.'**[cite: 1]",
+                conjugations: [
+                    { label: "Inquiring past", val: "Paati, unga married life kootu kudumbam-la kashṭam-ah?", id: "75_1", desc: "Grandma, was your early joint family life difficult?" },
+                    { label: "Contrasting US", val: "US-la kootu kudumbam system illai", id: "75_2", desc: "There is no joint family system in the US" },
+                    { label: "Dynamic help", val: "Kootu kudumbam daily cooking workload heavy", id: "75_3", desc: "Joint family daily cooking workload is heavy" }
+                ]
+            },
+            {
+                term: "Pattu saree",
+                tamil: "பட்டு சேலை",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Traditional **Kanchipuram silk saree** woven with gold threads (*zari*). Placed as luxury gifts[cite: 1].",
+                conjugations: [
+                    { label: "Gift selection", val: "Paati-ukku dark green border pattu saree choose paṇṇalatuma?", id: "76_1", desc: "Shall we choose a dark green border silk saree for Grandma?" },
+                    { label: "Silk texture", val: "Indha pattu saree soft border gold zari", id: "76_2", desc: "This silk saree has a soft border of gold thread" },
+                    { label: "Wearing", val: "Partner traditional pattu saree wear-paṇṇuvaanga", id: "76_3", desc: "My partner will wear a traditional silk saree" }
+                ]
+            },
+            {
+                term: "Elaneer",
+                tamil: "இளநீர்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Sought-after travel companion translating to **'tender coconut.'** Serves as perfect hydration[cite: 1].",
+                conjugations: [
+                    { label: "Ordering Coconut", val: "Anna, rendu fresh elaneer cut-paṇṇi kodu-nga", id: "77_1", desc: "Brother, please cut and give two fresh tender coconuts" },
+                    { label: "Cooling Health", val: "Body temperature-ku elaneer super", id: "77_2", desc: "Tender coconut is excellent for cooling down body temperature" },
+                    { label: "Street purchase", val: "Road vendor shop-la elaneer buy-paṇṇinom", id: "77_3", desc: "We bought tender coconut from the street vendor's shop" }
+                ]
+            },
+            {
+                term: "Tholhan / Tholhi",
+                tamil: "தோழன் / தோழி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Traditional gender-specific nouns meaning **'friend'** (Tholhan for male, Tholhi for female). Modern Tanglish often uses 'friend' directly[cite: 1].",
+                conjugations: [
+                    { label: "Male Friend", val: "En US tholhan office-la work-paṇṇuraan", id: "78_1", desc: "My US male friend works in an office" },
+                    { label: "Female Friend", val: "En tholhi software build-la developer", id: "78_2", desc: "My female friend is a developer in software building" },
+                    { label: "Direct collective", val: "Friends connection WhatsApp group", id: "78_3", desc: "Friends are connected in a WhatsApp group" }
+                ]
+            },
+            {
+                term: "Maathirai",
+                tamil: "மாத்திரை",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Medical noun translating to **'pill,'** **'tablet,'** or **'capsule.'** Essential for elder medication management[cite: 1].",
+                conjugations: [
+                    { label: "Daily thyroid pill", val: "Morning thyroid maathirai saapta appram tea kudi-nga", id: "79_1", desc: "Drink tea after taking your morning thyroid pill" },
+                    { label: "Arthritis support", val: "Arthritis pain maathirai box-la safe-ah irukku", id: "79_2", desc: "The arthritis pain pill is safe in the box" },
+                    { label: "Warning memory", val: "Maathirai dose marandhudha?", id: "79_3", desc: "Did you forget your pill dose?" }
+                ]
+            },
+            {
+                term: "Udambu",
+                tamil: "உடம்பு",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Noun meaning **'body'** or referring to **'physical health'** in conversational Tamil[cite: 1].",
+                conjugations: [
+                    { label: "Unwell Alert", val: "En partner udambu konjam tired-ah irukku", id: "80_1", desc: "My partner's physical health is a bit tired" },
+                    { label: "Safe Adaptation", val: "Heat and humidity-ala udambu scale drop-aagum", id: "80_2", desc: "Your physical health might drop due to heat and humidity" },
+                    { label: "Caring", val: "Paati udambu detail check paṇṇunga", id: "80_3", desc: "Ensure Grandma's physical health is monitored" }
+                ]
+            },
+            {
+                term: "Thookam",
+                tamil: "தூக்கம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Noun translating to **'sleep.'** Used to track rest[cite: 1].",
+                conjugations: [
+                    { label: "Deep sleep inquiry", val: "Paati, nethu night ungaluku thookam deep-ah vandhudha?", id: "81_1", desc: "Grandma, did you get deep sleep last night?" },
+                    { label: "Disturbed sleep", val: "Noise and mosquito-ala thookam disturb aayiduchu", id: "81_2", desc: "My sleep got disturbed due to noise and mosquitoes" },
+                    { label: "Lack of rest", val: "Jet lag travel thookam loss-u", id: "81_3", desc: "We lost sleep due to jet lag travel" }
+                ]
+            },
+            {
+                term: "Vali",
+                tamil: "வலி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Medical noun meaning <strong>'pain.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Arthritis joint pain", val: "Kaal joint-la arthritis vali high-ah irukku", id: "82_1", desc: "The arthritis joint pain in the leg is high" },
+                    { label: "Headache description", val: "Eye strain-ala severe headache vali irukku", id: "82_2", desc: "There is severe headache pain due to eye strain" },
+                    { label: "Relief", val: "Pain spray-ku appram vali zero", id: "82_3", desc: "After applying pain spray the pain is down to zero" }
+                ]
+            },
+            {
+                term: "Kovil",
+                tamil: "கோவில்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Cultural noun meaning <strong>'temple.'</strong> Central to the street geography of Chennai[cite: 1].",
+                conjugations: [
+                    { label: "Mylapore temple", val: "Naanga evening Mylapore kovil walk plan paṇṇi-nom", id: "83_1", desc: "We planned an evening Mylapore temple walk" },
+                    { label: "Temple guidelines", val: "Kovil ulla traditional rule support-paṇṇu-nga", id: "83_2", desc: "Inside the temple, support traditional rules" },
+                    { label: "Faith asset", val: "Kovil pond clean-ah irukku", id: "83_3", desc: "The temple pond is clean" }
+                ]
+            },
+            {
+                term: "Gopuram",
+                tamil: "கோபுரம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Architectural noun referring to the grand **sculpted temple gateway tower** of South Indian architecture[cite: 1].",
+                conjugations: [
+                    { label: "Praising Gopuram", val: "Mylapore temple gopuram design spectacular, Paati", id: "84_1", desc: "The Mylapore temple tower design is spectacular, Grandma" },
+                    { label: "Visual observation", val: "Gopuram adho ange view matches path", id: "84_2", desc: "The temple tower is visible rising high right there" },
+                    { label: "Photo target", val: "Gopuram photo capture-paṇṇu-nga", id: "84_3", desc: "Please capture a photo of the temple tower" }
+                ]
+            },
+            {
+                term: "Prasaadham",
+                tamil: "பிரசாதம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Spiritual food noun meaning **'sacred temple food offering,'** usually seasoned tamarind rice (*puliotharai*) or sweet pongal[cite: 1].",
+                conjugations: [
+                    { label: "Receiving temple food", val: "Kovil-lerundhu hot pongal prasaadham vaangi-nom", id: "85_1", desc: "We received hot pongal offering from the temple" },
+                    { label: "Praising taste", val: "Prasaadham taste and spice parameters perfect", id: "85_2", desc: "The temple offering's taste and spice are perfect" },
+                    { label: "Bringing back", val: "Paati-kaaga prasaadham safe box packing", id: "85_3", desc: "We packed temple food in a safe box for Grandma" }
+                ]
+            },
+            {
+                term: "Sillarai",
+                tamil: "சில்லறை",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Logistical financial noun translating to **'loose change'** or **'coins/small currency.'**[cite: 1]",
+                conjugations: [
+                    { label: "Taxi payments", val: "Anna, sillarai cash change ready-ah irukku", id: "86_1", desc: "Brother, I have loose change ready" },
+                    { label: "Auto driver request", val: "Auto driver sillarai change reject-paṇṇuraar", id: "86_2", desc: "The auto driver is rejecting loose change" },
+                    { label: "Small denomination", val: "Pocket-la sillarai change check-paṇṇu-nga", id: "86_3", desc: "Check your pocket for loose change" }
+                ]
+            },
+            {
+                term: "Vazhi",
+                tamil: "வழி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Logistical navigation noun meaning **'way,'** **'route,'** or **'path.'**[cite: 1]",
+                conjugations: [
+                    { label: "Lost in T-Nagar", val: "Pandi Bazaar road vazhi sariya puriyala", id: "87_1", desc: "The road route on Pandi Bazaar isn't very clear" },
+                    { label: "Asking driver", val: "Anna, Mylapore kovil safe shortcut vazhi theriyuma?", id: "87_2", desc: "Brother, do you know a safe shortcut route to Mylapore temple?" },
+                    { label: "Path assurance", val: "GPS map vazhi show-paṇṇudhu", id: "87_3", desc: "The GPS map is showing the route" }
+                ]
+            },
+            {
+                term: "Veeyyal",
+                tamil: "வெயில்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Environmental noun meaning **'sunlight,'** **'external heat,'** or **'sweltering sun.'**[cite: 1]",
+                conjugations: [
+                    { label: "Daytime extreme heat", val: "Afternoon veeyyal severe level-la irukku", id: "88_1", desc: "The afternoon sun is at a severe level" },
+                    { label: "Adapting", val: "Veeyyal fatigue koraika umbrella use-paṇṇu-nga", id: "88_2", desc: "Use an umbrella to avoid the sun's fatiguing heat" },
+                    { label: "Warning partner", val: "Veeyyal over, head-la severe vali varum", id: "88_3", desc: "The sun is too hot, it will cause a severe headache" }
+                ]
+            },
+            {
+                term: "Irukkam",
+                tamil: "இறுக்கம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Environmental noun meaning **'humidity,'** **'stuffiness,'** or **'closeness of the air.'**[cite: 1]",
+                conjugations: [
+                    { label: "Chennai Humidity", val: "AC off aana, room ulla humidity irukkam over-ah rise-aagum", id: "89_1", desc: "If the A/C is off, the humidity and stuffiness inside will rise highly" },
+                    { label: "Partner comfort", val: "En partner humidity irukkam thanga mudiyala", id: "89_2", desc: "My partner cannot bear the stuffiness" },
+                    { label: "AC dynamic cool", val: "Irukkam koraika AC high-la vai-nga", id: "89_3", desc: "Turn the A/C high to reduce humidity" }
+                ]
+            },
+            {
+                term: "Thuni",
+                tamil: "துணி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Domestic noun translating to **'cloth,'** **'fabric,'** or **'laundry clothes.'**[cite: 1]",
+                conjugations: [
+                    { label: "Washing machine instructions", val: "Washing machine run thuni load ready", id: "90_1", desc: "The washing machine load of clothes is ready for running" },
+                    { label: "Dryer usage", val: "Wash-paṇṇuna thuni terrace-la dry-paṇṇu-nga", id: "90_2", desc: "The washed clothes are on the terrace for drying" },
+                    { label: "Traditional apparel", val: "Saree and dhoti traditional thuni selection", id: "90_3", desc: "Saree and dhoti are traditional clothing selections" }
+                ]
+            },
+            {
+                term: "Madi",
+                tamil: "மாடி",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Spatial domestic noun meaning **'upstairs,'** **'terrace,'** or **'balcony level.'**[cite: 1]",
+                conjugations: [
+                    { label: "Laundry area", val: "Washing machine setup madi-la safe-ah irukku", id: "91_1", desc: "The washing machine setup is safely upstairs on the terrace" },
+                    { label: "Evening breeze", val: "Evening-la naanga madi-la walk-paṇṇuvom", id: "91_2", desc: "We are walking upstairs on the terrace to catch the cool evening air" },
+                    { label: "Grandma's warning", val: "Madi steps-la careful-ah ponga", id: "91_3", desc: "Go carefully on the terrace stairs" }
+                ]
+            },
+            {
+                term: "Thalayanai",
+                tamil: "தலையணை",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Domestic noun translating to **'pillow'** or **'headrest.'**[cite: 1]",
+                conjugations: [
+                    { label: "Requesting Extra Pillow", val: "Paati, guest bed-ukku extra soft thalayanai venum", id: "92_1", desc: "Grandma, we need an extra soft pillow placed on the guest bed" },
+                    { label: "Posture protection", val: "Back posture security thalayanai positioning", id: "92_2", desc: "Position the pillow safely for back posture support" },
+                    { label: "Bed preparation", val: "Blanket and thalayanai matched", id: "92_3", desc: "The blanket and pillow settings are fully matched" }
+                ]
+            },
+            {
+                term: "Paal",
+                tamil: "பால்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Domestic noun meaning <strong>'milk.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Boiling Milk Alert", val: "Stove side check-paṇṇunga, paal pongi spill aagudhu", id: "93_1", desc: "Check the stove, the milk is boiling and spilling over" },
+                    { label: "Hot milk for Paati", val: "Night bed-ukku munnaadi hot organic paal kudi-nga", id: "93_2", desc: "Please drink hot organic milk before bed tonight" },
+                    { label: "Vegan explanation", val: "Engaluku dairy paal vendaam, almond paal ok", id: "93_3", desc: "We don't want dairy milk, almond milk is fine" }
+                ]
+            },
+            {
+                term: "Kudika",
+                tamil: "குடிக்க",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Infinitive verb form translating to <strong>'to drink.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Requesting safe water", val: "Kudika filtered kaachina thanni ready-ah?", id: "94_1", desc: "Is filtered boiled water ready to drink?" },
+                    { label: "Coffee invitation", val: "Filter coffee kudika vaanga, Paati", id: "94_2", desc: "Grandma, please come to drink filter coffee" },
+                    { label: "Hydration check", val: "Daily fresh elaneer kudika range setup", id: "94_3", desc: "Keep a fresh tender coconut ready to drink daily" }
+                ]
+            },
+            {
+                term: "Saapida",
+                tamil: "சாப்பிட",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Infinitive verb form translating to <strong>'to eat.'</strong>[cite: 1]",
+                conjugations: [
+                    { label: "Dinner alert", val: "Paati, dinner saapida sitting placement ready", id: "95_1", desc: "Grandma, please come sit down to eat dinner" },
+                    { label: "Declining extra idli", val: "No Paati, saapida stomach full", id: "95_2", desc: "No Grandma, our capacity to eat is full, stomach is full" },
+                    { label: "Invitation", val: "Rendu perum idli saapida ready", id: "95_3", desc: "Both of us are ready to eat idlis" }
+                ]
+            },
+            {
+                term: "Kaalai",
+                tamil: "காலை",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Temporal noun translating to <strong>'morning'</strong> or **'forenoon.'**[cite: 1]",
+                conjugations: [
+                    { label: "Morning walk", val: "Kaalai 7 AM air quality cooling check", id: "96_1", desc: "The morning 7 AM air quality is very cool and pleasant" },
+                    { label: "Pill schedule", val: "Kaalai-la thyroid maathirai saapda-num", id: "96_2", desc: "You must take your thyroid pill in the morning" },
+                    { label: "Greeting", val: "Kaalai filter coffee super", id: "96_3", desc: "The morning filter coffee is superb" }
+                ]
+            },
+            {
+                term: "Maalai",
+                tamil: "மாலை",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Temporal noun translating to <strong>'evening'</strong> or **'sunset time.'** Often conversationalized as 'evening-u'[cite: 1].",
+                conjugations: [
+                    { label: "Evening outing", val: "Maalai time heat low, temple trip safe", id: "97_1", desc: "The evening heat is low, so the temple trip is safe" },
+                    { label: "Tea session", val: "Maalai filter tea ready-ah, Paati?", id: "97_2", desc: "Are evening filter tea and mild snacks ready, Grandma?" },
+                    { label: "Sunset", val: "Maalai wind cooling on madi", id: "97_3", desc: "The evening breeze is cooling upstairs on the terrace" }
+                ]
+            },
+            {
+                term: "Night-u",
+                tamil: "நைட்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Temporal adult loanword meaning <strong>'night-time'</strong> or **'bedtime.'**[cite: 1]",
+                conjugations: [
+                    { label: "Early sleep", val: "Jet lag tiredness naala naanga night-u early-ah padukalaam", id: "98_1", desc: "Due to jet lag travel tiredness, we will lie down early tonight" },
+                    { label: "Safe doors check", val: "Night window netting lock validation", id: "98_2", desc: "Ensure the window insect netting is locked tonight" },
+                    { label: "Sleep wish", val: "Good night-u Paati, comfortable-ah thoongunga", id: "98_3", desc: "Good night Grandma, sleep comfortably" }
+                ]
+            },
+            {
+                term: "Varusham",
+                tamil: "வருஷம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Temporal noun translating to <strong>'year.'</strong> Conversationalized as 'year-u' or 'varusham'[cite: 1].",
+                conjugations: [
+                    { label: "Length of marriage", val: "Unga married life strictly fifty varusham, Paati", id: "99_1", desc: "Your married life spanned exactly fifty years, Grandma" },
+                    { label: "Next trip prediction", val: "Next varusham couple-ah thirumba varom", id: "99_2", desc: "We will return next year as a couple" },
+                    { label: "Age inquiry", val: "Paati unga active age ninety varusham aacha?", id: "99_3", desc: "Grandma, did your active age cross ninety years?" }
+                ]
+            },
+            {
+                term: "Gnaabagam",
+                tamil: "ஞாபகம்",
+                category: "vocabulary",
+                categoryLabel: "Essential Vocabulary",
+                meaning: "Cognitive noun translating to **'memory,'** **'recollection,'** or **'remembering.'**[cite: 1]",
+                conjugations: [
+                    { label: "Preserving stories", val: "Thatha-oda early service gnaabagam safe-ah record paṇṇalatuma?", id: "100_1", desc: "Shall we record Grandfather's early service memories safely?" },
+                    { label: "Recall check", val: "Paati, unga native village street design clear gnaabagam irukka?", id: "100_2", desc: "Grandma, do you have a clear memory of your native village street design?" },
+                    { label: "Affectionate validation", val: "Unga recipes memory gnaabagam US-la safe", id: "100_3", desc: "Your recipe memories will always remain safe with us in the US" }
+                ]
+            }
+        ];
+
+        // Decoupled, deterministic programmatic asset framework[cite: 1]
+        function playPhraseAudio(phraseId, buttonElement) {
+            if (buttonElement.classList.contains('playing')) return;
+
+            buttonElement.classList.add('playing');
+            const icon = buttonElement.querySelector('i');
+            icon.className = "fa-solid fa-spinner fa-spin";
+
+            // Relative folder strategy prevents string collisions or brittle remote download bottlenecks
+            const dynamicAssetPath = `./audio/${phraseId}.mp3`;
+            const audioPlayer = new Audio(dynamicAssetPath);
+
+            audioPlayer.play().catch(err => {
+                console.error("Local audio context asset deployment missing. Verify files exist in /audio/.", err);
+                icon.className = "fa-solid fa-volume-high";
+                buttonElement.classList.remove('playing');
+            });
+
+            audioPlayer.onended = () => {
+                icon.className = "fa-solid fa-volume-high";
+                buttonElement.classList.remove('playing');
+            };
+
+            audioPlayer.onerror = () => {
+                icon.className = "fa-solid fa-volume-high";
+                buttonElement.classList.remove('playing');
+            };
+        }
+
+        const dictionaryGrid = document.getElementById('dictionaryGrid');
+        const searchInput = document.getElementById('searchInput');
+        const statsIndicator = document.getElementById('statsIndicator');
+        let currentFilter = 'all';
+
+        function renderDictionary() {
+            const query = searchInput.value.toLowerCase().trim();
+            dictionaryGrid.innerHTML = '';
+            let visibleCount = 0;
+
+            dictionaryData.forEach(item => {
+                const termMatches = item.term.toLowerCase().includes(query) || 
+                                    item.tamil.includes(query) || 
+                                    item.meaning.toLowerCase().includes(query);
+                
+                const categoryMatches = (currentFilter === 'all' || item.category === currentFilter);
+
+                if (termMatches && categoryMatches) {
+                    visibleCount++;
+                    const card = document.createElement('div');
+                    card.className = 'dict-card';
+                    card.setAttribute('data-category', item.category);
+
+                    const headerSection = document.createElement('div');
+                    headerSection.className = 'dict-header';
+                    headerSection.innerHTML = `<div class="dict-term-group"><h3>${item.term} <span class="dict-tamil-script">(${item.tamil})</span></h3></div><span class="tag-category ${item.category}">${item.categoryLabel}</span>`;
+                    card.appendChild(headerSection);
+
+                    const meaningText = document.createElement('p');
+                    meaningText.className = 'dict-meaning';
+                    meaningText.innerHTML = `<strong>Meaning:</strong> ${item.meaning}`;
+                    card.appendChild(meaningText);
+
+                    if (item.conjugations && item.conjugations.length > 0) {
+                        const conjBox = document.createElement('div');
+                        conjBox.className = 'conjugation-box';
+                        
+                        const conjTitle = document.createElement('div');
+                        conjTitle.className = 'conjugation-title';
+                        conjTitle.textContent = 'Typical Conversational Adaptations';
+                        conjBox.appendChild(conjTitle);
+
+                        const conjGrid = document.createElement('div');
+                        conjGrid.className = 'conjugation-grid';
+
+                        item.conjugations.forEach(c => {
+                            const conjItem = document.createElement('div');
+                            conjItem.className = 'conjugation-item';
+
+                            const label = document.createElement('span');
+                            label.className = 'conj-label';
+                            label.textContent = c.label;
+                            conjItem.appendChild(label);
+
+                            const valContainer = document.createElement('div');
+                            valContainer.className = 'conj-val-container';
+
+                            const valSpan = document.createElement('span');
+                            valSpan.className = 'conj-val';
+                            valSpan.textContent = c.val;
+                            valContainer.appendChild(valSpan);
+
+                            const btn = document.createElement('button');
+                            btn.className = 'play-audio-btn no-print';
+                            btn.title = 'Hear Native Pronunciation';
+                            btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                            
+                            // Native event listeners secure character escape paths smoothly[cite: 1]
+                            btn.addEventListener('click', () => playPhraseAudio(c.id, btn));
+                            valContainer.appendChild(btn);
+                            conjItem.appendChild(valContainer);
+
+                            const desc = document.createElement('span');
+                            desc.className = 'conj-desc';
+                            desc.textContent = `"${c.desc}"`;
+                            conjItem.appendChild(desc);
+
+                            conjGrid.appendChild(conjItem);
+                        });
+
+                        conjBox.appendChild(conjGrid);
+                        card.appendChild(conjBox);
+                    }
+
+                    dictionaryGrid.appendChild(card);
+                }
+            });
+
+            statsIndicator.textContent = `Showing ${visibleCount} of 100 entries`;
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                dictionaryGrid.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                dictionaryGrid.style.display = 'grid';
+            }
+        }
+
+        function filterCategory(categoryName, btnElement) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            currentFilter = categoryName;
+            renderDictionary();
+        }
+
+        searchInput.addEventListener('input', renderDictionary);
+        window.onload = function() { renderDictionary(); };
+    </script>
+</body>
+</html>
